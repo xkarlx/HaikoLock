@@ -1,6 +1,9 @@
 package com.hadikolock;
-
+import android.os.Bundle; // here
 import com.facebook.react.ReactActivity;
+import org.devio.rn.splashscreen.SplashScreen; // here
+
+
 
 public class MainActivity extends ReactActivity {
 
@@ -11,5 +14,11 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "HadikoLock";
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+      SplashScreen.show(this, R.style.SplashStatusBarTheme);
+      super.onCreate(savedInstanceState);
   }
 }

@@ -12,14 +12,25 @@ import thunk from 'redux-thunk';
 import { Provider as PaperProvider } from 'react-native-paper';
 import FlashMessage from 'react-native-flash-message';
 
+import themeApp from "./src/styles/theme"
+import GeneralStatusBarColor from './src/components/GeneralStatusBarColor';
+import SplashScreen from 'react-native-splash-screen';
+
 export default function HadikoLock() {
 
   const store = createStore(rootReducer,applyMiddleware(thunk))
 
+  React.useEffect(()=>{
+    SplashScreen.hide()
+
+  },[])
+
   return (
     
     <Provider store={store}>
-      <PaperProvider>
+      <PaperProvider theme={themeApp}>
+      <GeneralStatusBarColor backgroundColor={themeApp.colors.primary}
+              barStyle="light-content"/>
       <SafeAreaProvider>
         <View style={{ flex: 1 }}>
           <Navigation></Navigation>

@@ -13,6 +13,8 @@ import HistoryScreen from "../containers/HistoryScreen";
 import LockScreen from "../containers/LockScreen";
 import ReadScreen from "../containers/ReadScreen"
 import { getHistory } from "../redux/actions/historyAction";
+import { useTheme } from "react-native-paper";
+import Header from "../components/Header";
 
 
 
@@ -24,9 +26,15 @@ function Navigation() {
  
   const dispatch=useDispatch()
 
+  const {colors} = useTheme()
+
   function HistoryStack({ navigation }) {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{
+        header: ({ scene, previous, navigation,theme }) => (
+          <Header scene={scene} previous={previous} navigation={navigation} theme={theme} />
+        ),
+      }}>
          <Stack.Screen
           name="History"
           component={HistoryScreen}
@@ -39,7 +47,11 @@ function Navigation() {
 
   function LockStack({ navigation }) {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{
+        header: ({ scene, previous, navigation,theme }) => (
+          <Header scene={scene} previous={previous} navigation={navigation} theme={theme} />
+        ),
+      }}>
         <Stack.Screen
           name="Lock"
           component={LockScreen}          
@@ -50,7 +62,11 @@ function Navigation() {
 
   function ReadStack({ navigation }) {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{
+        header: ({ scene, previous, navigation,theme }) => (
+          <Header scene={scene} previous={previous} navigation={navigation} theme={theme} />
+        ),
+      }}>
         <Stack.Screen
           name="Read NFC"
           component={ReadScreen}          
@@ -81,7 +97,7 @@ function Navigation() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: "red",
+          activeTintColor: colors.primary,
           inactiveTintColor: "gray",
         }}
       >

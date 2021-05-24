@@ -6,12 +6,11 @@ History.schema = {
     name: "History",
     bsonType: "object",
     primaryKey: "_id",
-    required: ["_id", "key","readDate","selected"],
+    required: ["_id", "key","readDate"],
     properties: {
       _id:  "objectId" ,
       key:  "string" ,
-      readDate: "date",
-      selected: "bool"
+      readDate: "date"
       }
 
 };

@@ -1,4 +1,4 @@
-import { createOne, deleteAll, deleteOne, getAll, updateOne } from "../../database/dataBasehandler/HistoryHandler"
+import { createOne, deleteAll, deleteOne, getAll, updateOne,getOne } from "../../database/dataBasehandler/HistoryHandler"
 
 
 export function deleteCompleteHistory(){
@@ -8,6 +8,17 @@ export function deleteCompleteHistory(){
         dispatch({type:"DELETE_COMPLETE_HISTORY"})
     }
     
+}
+
+export function setHistoryAsSelected(id){
+    var historyJSON = getOne("History",id,true);
+    return (dispatch) =>{
+        
+        var result =updateOne({...historyJSON,selected:true}) 
+       
+        dispatch({type:"UPDATE_HISTORY",payload:result})
+    }
+
 }
 
 export function deleteHistory(id){

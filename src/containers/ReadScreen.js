@@ -27,7 +27,7 @@ function ReadScreen({navigation}){
         if(timeout){ //the code works without this but let's be safe and clean up the timeout
             clearTimeout(timeout);
         }
-        console.log("response",response)
+    
         return response;
     }
     
@@ -60,6 +60,10 @@ function ReadScreen({navigation}){
     
     const onToggleSwitch = () => setState({...state,selected:!state.selected});
 
+    function seed(){
+        var today = new Date();
+        setState({key:String(Math.random()),readDate:today,selected:true});
+    }
 
     return(
       
@@ -86,6 +90,11 @@ function ReadScreen({navigation}){
                    
                 </Card>
             }
+
+            <View>
+                <Button onPress={()=>seed()}>Add</Button>
+
+            </View>
            
         </View>
        
