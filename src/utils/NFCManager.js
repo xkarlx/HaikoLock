@@ -5,6 +5,11 @@ async function initNfc() {
   await NfcManager.start();
 }
 
+function tagToByteList(){
+
+
+
+}
 
 function readNdef() {
     const cleanUp = () => {
@@ -17,6 +22,10 @@ function readNdef() {
   
       NfcManager.setEventListener(NfcEvents.DiscoverTag, (tag) => {
         tagFound = tag;
+        
+        var bytes=tag.id.match(/.{1,2}/g).map(element=>parseInt("0x"+element))
+        console.log(Ndef.decodeMessage(bytes),bytes)
+        console.log(Ndef.decodeMessage([1]))
         resolve(tagFound);
         if (Platform.OS === 'ios') {
             NfcManager.setAlertMessageIOS('NDEF tag found');
@@ -37,15 +46,16 @@ function readNdef() {
 
 async function writeNdef({type, value}) {
   let result = false;
-
+  console.log("test started")
   try {
     // Step 1
-    await NfcManager.requestTechnology(NfcTech.Ndef, {
+    await NfcManager.requestTechnology([NfcTech.NfcA,NfcTech.Ndef, NfcTech.IsoDep], {
       alertMessage: 'Ready to write some NDEF',
     });
+    console.log("step 1 finished")
 
     const bytes = Ndef.encodeMessage([Ndef.textRecord('Hello NFC')]);
-
+    console.log(bytes)
     if (bytes) {
       await NfcManager.ndefHandler // Step2
         .writeNdefMessage(bytes); // Step3
@@ -66,9 +76,20 @@ async function writeNdef({type, value}) {
 }
 
 export async function readNFCAction(){
-    var result;
+  var result;
+  await initNfc().then(
+      res => readNdef().then(res => {result =res  })
+  )
+  return result;
+}
+
+export async function writeNFCAction(){
+  var result;
+  
     await initNfc().then(
-        res => readNdef().then(res => {result =res  })
-    )
+        res => {
+          writeNdef({type:"",value:""}).then(res => {result =res; console.log(res)  }).catch(err=>console.log(err))
+        })
+    
     return result;
 }

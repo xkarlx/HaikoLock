@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { showMessage, hideMessage } from "react-native-flash-message";
 import { createHistory } from "../redux/actions/historyAction";
 import { readNFCAction } from "../utils/NFCManager";
+import { Ndef } from "react-native-nfc-manager";
 
 function ReadScreen({navigation}){
 
@@ -43,6 +44,7 @@ function ReadScreen({navigation}){
               });
         }
         else{
+            
             var today = new Date();
             setState({key:data.id,readDate:today,selected:true});
         }  
